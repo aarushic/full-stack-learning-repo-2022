@@ -1,7 +1,6 @@
 /** Module for handling users */
 const firebase = require("../firebase/cred.js");
 const express = require("express");
-const app = express()
 const cors = require('cors')
 const db = firebase.firestore();
 require("dotenv").config();
@@ -26,7 +25,7 @@ todo.use(express.json());
       uid: doc.id
     });
 
-    res.status(200).send("OK")
+    res.json(ret);
   });
 
 
@@ -34,11 +33,7 @@ todo.use(express.json());
     const todo = db.collection("todos");
   
     const todos = await todo.get(); // Since async operation, use await
-    //const todos = await todo.where('email', '==', body.email).get();
     const ret = todos.docs.map((obj) => obj.data());
-
-    // (todos.docs).forEach(doc => console.log(doc.id))
-    // console.log(ret);
   
     res.json(ret);
   });
@@ -48,17 +43,11 @@ todo.use(express.json());
     const todo = db.collection("todos");
   
     const user = req.params.user_id;
-    //const todos = await todo.get(); // Since async operation, use await
     const todos = await todo.where('email', '==', user).get();
     const ret = todos.docs.map((obj) => obj.data());
-
-    // (todos.docs).forEach(doc => console.log(doc.id))
-    // console.log(ret);
   
     res.json(ret);
   });
-
-
 
 //delete
 todo.delete("/", async (req, res) => {

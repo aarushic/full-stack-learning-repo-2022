@@ -23,6 +23,7 @@ import {
 
 export default function HomePage() {
   const [tasks, setTasks] = useState([]);
+  //after creating each todo add it to todo list and rerender
 
   useEffect(() => {
     const user = window.localStorage.getItem("username");
@@ -43,10 +44,7 @@ export default function HomePage() {
     .catch((err) => {
         console.log(err);
       });
-
-    //  console.log(window.localStorage.getItem("username"))
-
-  });
+  }, []);
 
   // taskName: a string of the name of task that you want to add; setToDo: a function that allows you to edit the taskName
   const [taskName, setTaskName] = useState("");
